@@ -12,53 +12,91 @@ const Api = (() => {
   })();
 
   const View = (() => {
-    let ele=document.querySelector('.all-courses')
-    const render = (tmp) => {
-      ele.innerHTML = tmp;
+    const domstr = {
+        allcoursescontainer: '#all-courses'
+      };
+    
+    const render = (ele,tmp) => {
+      ele.innerHTML =`<li>Avalible Courses<li>`+ tmp;
     };
     const createTmp = (arr) => {
         let tmp = '';
         arr.forEach((courses) => {
           tmp += `
-            <li>
-              <p>${courses.courseId}-${courses.courseName}</p>
-              <p>${courses.credit}</p>
-              <br
+            <li >
+              <button class="course" id="${courses.courseId}">${courses.courseName} 
+                <span >Class type-${courses.required} </span>
+                <span >Classc credet ${courses.credit}</span>
+              </button>
             </li>
           `;
         });
         return tmp;
       }
         return {
-          render,
-          createTmp,
+            domstr,
+            render,
+            createTmp,
         };
   })();
   
  //-----------------------------------------------------------------------
 
 
- const Model = ((api) => {
+ const Model = ((api, view) => {
+    class Courses {
+        constructor(courseId, courseName, credit) {
+          this.userId = courseId;
+          this.courseName = courseName;
+          this.credit = credit;
+        }
+      }
+      class State {
+        #courselist = [];
+    
+        get courselist() {
+          return this.#courselist;
+        }
+        set courselist(newcourselist) {
+          this.#courselist = [...newcourselist];
+    
+          const allcoursescontainer = document.querySelector(view.domstr.allcoursescontainer);
+          const tmp = view.createTmp(this.#courselist);
+          view.render(allcoursescontainer, tmp);
+        }
+      }
     const {getCourse} = api
     return{
-        getCourse
+        getCourse,
+        Courses,
+        State,
     }
     
-    })(Api)
+    })(Api, View)
 
 
 //-----------------------------------------------------------------------
 
 const controller = ((model, view) => {
-    
+    const state = new model.State();
+
+    const selectedCourse = () => {
+        const allcoursescontainer = document.querySelector(view.domstr.allcoursescontainer);
+        allcoursescontainer.addEventListener('click', (e) => {
+        if (e.target.className === 'course') {
+            console.log(e.target.id)
+        }
+      
+      });
+      };
     const init = () => {
-        model.getCourse().then( course =>{
-        const tmp = view.createTmp(course);
-        view.render(tmp)
-        })
-    }
+        model.getCourse().then((courses) => {
+          state.courselist = [...courses];
+        });
+      };
     return{
-        init
+        init,
+        selectedCourse
         }
 })(Model, View)
 controller.init()
