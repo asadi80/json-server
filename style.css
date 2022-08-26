@@ -1,0 +1,43 @@
+:root {
+    --height-all-courses-container: 10px;
+  
+  
+    
+  }
+
+
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.main{
+    display: flex;
+    justify-content: space-around;
+}
+.all-courses-container{
+    margin-top: 20px;
+    width: 200px;
+    height: 400px;
+    border: 2px solid black;
+}
+
+.selected-courses-container{
+    margin-top: 20px;
+    width: 200px;
+    height: 400px;
+    border: 2px solid black;
+
+}
+ul {
+    height: calc(100% - var(--height-all-courses-container) * 2);
+    overflow: auto;
+  }
+
+ul li p {
+    overflow: hidden;
+}
+ul li {
+    display: flex;
+    justify-content: space-between;
+  }
