@@ -19,7 +19,7 @@ export const Model = ((api, view) => {
       #totalcredit = 0;
       #emptCourses = [];
       #selectedCourses = [];
-      #coursesToAdd=[]
+      
   
       get allcourses() {
         return this.#allcourses;

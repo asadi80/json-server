@@ -22,11 +22,11 @@ export const View = (() => {
         let courseType = course.required ? "Compulsory" : "Elective";
         templet += `
           <li>
-            <p class="course" id="${course.courseId}">
+            <button class="course" id="${course.courseId}">
                 ${course.courseName}
                 Course Type: ${courseType}
                 Course Credit: ${course.credit}
-            </p>
+            </button>
           </li>
         `;
       });
