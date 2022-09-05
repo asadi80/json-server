@@ -5,13 +5,13 @@ export const Api = (() => {
     const getCourses = () =>
       fetch([baseUrl, courseList].join("/")).then((response) => response.json());
   
-    const deleteCourse = (id) =>
-      fetch([baseUrl, courseList,[...id]].join("/"), {
+    const deletedCourse = (id) =>
+      fetch([baseUrl, courseList,id].join("/"), {
         method: "DELETE",
       });
   
     return {
       getCourses,
-      deleteCourse,
+      deletedCourse,
     };
   })();

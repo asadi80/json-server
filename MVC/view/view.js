@@ -7,8 +7,9 @@ export const View = (() => {
       selectedCourses: "#selected-courses",
     };
   
-    const background = (ele, selected) => {
-      ele.style.backgroundColor = selected ? "blue" : originalColor;
+    const background = (element, Selected, isOdd) => {
+      const originalColor = isOdd ? "white" : "rgb(77, 201, 223)";
+      element.style.backgroundColor = Selected ? "blue" : originalColor;
     };
     const render = (ele, templet) => {
       ele.innerHTML = templet;
@@ -22,11 +23,12 @@ export const View = (() => {
         let courseType = course.required ? "Compulsory" : "Elective";
         templet += `
           <li>
-            <button class="course" id="${course.courseId}">
+            <p value="${course.credit}" class="course" id="${course.courseId}">
+            ${course.courseId}-
                 ${course.courseName}
                 Course Type: ${courseType}
                 Course Credit: ${course.credit}
-            </button>
+            </p>
           </li>
         `;
       });
@@ -37,13 +39,11 @@ export const View = (() => {
       let templet = '';
   
       arr.forEach((course) => {
-        let courseType = course.required ? "Compulsory" : "Elective";
+        
         templet += `
           <li>
             <p class="courses" id="${course.courseId}">
-                ${course.courseName}
-                Course Type: ${courseType}
-                Course Credit: ${course.courseCredit}
+            ${course}
             </p>
           </li>
         `;

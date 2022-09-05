@@ -40,7 +40,7 @@ nav , main {
     margin: 0;
 }
 
-li:nth-child(odd) {
+li:nth-child(even) {
     background: rgb(77, 201, 223);
     
   }
@@ -82,5 +82,10 @@ ul {
 
 .element {
     pointer-events: none;
+}
+
+.disabled{
+    pointer-events:none;
+    opacity:0.4;
 }
 

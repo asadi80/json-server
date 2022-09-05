@@ -3,7 +3,7 @@ import { View } from "../view/view.js";
 
 
 export const Model = ((api, view) => {
-    const { getCourses, deleteCourse } = api;
+    const { getCourses, deletedCourse } = api;
   
     class Course {
       constructor(courseId, courseName, required, credit) {
@@ -17,9 +17,9 @@ export const Model = ((api, view) => {
     class State {
       #allcourses = [];
       #totalcredit = 0;
-      #emptCourses = [];
       #selectedCourses = [];
-      
+      #selectedId = [];
+     
   
       get allcourses() {
         return this.#allcourses;
@@ -30,9 +30,14 @@ export const Model = ((api, view) => {
           return this.#selectedCourses;
         }
         
-        get emptCourses() {
-            return this.#emptCourses;
+        get selectedId() {
+          return this.#selectedId;
         }
+       
+        set selectedId(newtodolist) {
+          this.#selectedId = [...newtodolist];
+        }
+      
   //----------create and render all courses
       set allcourses(newlist) {
         this.#allcourses = [...newlist];
@@ -47,6 +52,7 @@ export const Model = ((api, view) => {
     //----------create and render all selected courses
       setSelectedCourses(newlist) {
         this.#selectedCourses = [...newlist];
+        console.log(this.#selectedCourses);
         
         const selectedContainer = document.querySelector(
           view.domstr.selectedCourses
@@ -55,9 +61,7 @@ export const Model = ((api, view) => {
         view.render(selectedContainer, templet);
       }
   
-      setemptCourses(newlist) {
-        this.#emptCourses = [...newlist];
-      }
+      
   
       setTotalcredit(credit) {
         this.#totalcredit = credit;
@@ -66,10 +70,10 @@ export const Model = ((api, view) => {
         view.render(creditText, this.#totalcredit);
       }
   
-      setElementBackground(ele, selected) {
-        view.background(ele, selected);
+      setElementBackground(ele, selected, isOdd) {
+        view.background(ele, selected, isOdd);
       }
     }
   
-    return { getCourses, deleteCourse, State, Course };
+    return { getCourses, deletedCourse, State, Course };
   })(Api, View);
